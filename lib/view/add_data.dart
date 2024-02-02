@@ -1,3 +1,4 @@
+import 'package:finance_app/controller/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +12,11 @@ class AddTransaction extends StatefulWidget {
 }
 
 class _AddTransactionState extends State<AddTransaction> {
+  
   DateTime selectedDate = DateTime.now();
   int? amount;
+  String enteredText = '';
+
 
   String selected = "Income";
 
@@ -71,7 +75,8 @@ class _AddTransactionState extends State<AddTransaction> {
           TextField(
             decoration: const InputDecoration(
               hintText: "0",
-              border: InputBorder.none,
+              border: OutlineInputBorder(),
+              
             ),
             style: TextStyle(
               fontSize: hh * 0.024,
@@ -89,6 +94,15 @@ class _AddTransactionState extends State<AddTransaction> {
             height: hh * 0.012,
           ),
           //
+          TextField(decoration: InputDecoration(
+            hintText: 'Note your Income/Expense',
+            border: OutlineInputBorder()
+          ),
+          onChanged: (val) {
+            enteredText = val.toString();
+          },
+          
+          ),
              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -163,10 +177,14 @@ class _AddTransactionState extends State<AddTransaction> {
           ),
           InkWell(
             onTap: () {
-              // //
-              // print(amount);
-              // print(selected);
-              // print(selectedDate);
+              print(amount);
+              print(enteredText);
+              print(selected);
+              print(selectedDate);
+
+              DbHelper dbHelper = DbHelper();
+              dbHelper.addData(amount!, selectedDate, selected, enteredText);
+              Navigator.of(context).pop();
             },
             child: Container(
               decoration: BoxDecoration(
@@ -182,7 +200,6 @@ class _AddTransactionState extends State<AddTransaction> {
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.w700,
-                  // color: Colors.white,
                   color: Theme.of(context).colorScheme.inverseSurface,
                 ),
               ),

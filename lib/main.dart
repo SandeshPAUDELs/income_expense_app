@@ -8,7 +8,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:provider/provider.dart';
 void main() async {
   await Hive.initFlutter();
-  var box = await Hive.openBox('mybox');
+  var box = await Hive.openBox('money');
 
 
   // Hive.registerAdapter(AdddataAdapter());

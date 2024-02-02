@@ -13,18 +13,6 @@ class SelectedTypeProvider with ChangeNotifier {
 }
 
 
-// class DateSelectorProvider with ChangeNotifier {
-//     late DateTime _selectedDate;
-
-//       DateTime get selectedDate => _selectedDate;
-//       void setTransactionData({
-//     required DateTime date,
-
-//   }) {
-//     _selectedDate = date;
-//     notifyListeners();
-//   }
-// }
 class DateSelectorProvider with ChangeNotifier {
   late DateTime _selectedDate;
 
