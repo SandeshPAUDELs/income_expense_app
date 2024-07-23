@@ -1,3 +1,4 @@
+import 'package:finance_app/app_services/network_handler.dart';
 import 'package:finance_app/data/network_services/user_service.dart';
 import 'package:finance_app/main.dart';
 import 'package:finance_app/model/data.dart';
@@ -5,6 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthViewModel extends ChangeNotifier {
+    String _newUserDetails = '';
+  String get newUserDetails => _newUserDetails;
+  void setNewUserDetails(String value) {
+    _newUserDetails = value;
+    notifyListeners();
+  }
+
   final UserService _authService = UserService();
   AuthenticatedUser? _authenticatedUser;
   AuthenticatedUser? get authenticatedUser => _authenticatedUser;
@@ -31,5 +39,18 @@ class AuthViewModel extends ChangeNotifier {
       print('Error: $_errorMessage');
     }
     notifyListeners();
+  }
+  
+  // code for adding user
+  Future<void> addUser(AddUser user) async {
+    var finalResponse = await UserService.addUser(user);
+    if (finalResponse is Success) {
+      setNewUserDetails(user.toJson().toString());
+      print(finalResponse.response); 
+      notifyListeners();
+    } else if (finalResponse is Failure) {
+      print(finalResponse.code);
+      
+    }
   }
 }

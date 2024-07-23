@@ -1,3 +1,4 @@
+import 'package:finance_app/model/data.dart';
 import 'package:finance_app/view_models/user_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
+  //  const  authViewModel = Provider.of<AuthViewModel>(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
@@ -48,9 +51,12 @@ class LoginScreen extends StatelessWidget {
               onPressed: () {
                 String username = _usernameController.text;
                 String password = _passwordController.text;
+                final AddUser user = AddUser(username: username, password: password);
 
-                Provider.of<AuthViewModel>(context, listen: false)
-                    .login(username, password, context);
+                // Provider.of<AuthViewModel>(context, listen: false)
+                //     .login(username, password, context);
+                Provider.of<AuthViewModel>(context, listen: false).addUser(user);
+                
               },
               child: const Text('Login'),
             ),
