@@ -1,34 +1,32 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:finance_app/app_services/app_url.dart';
-import 'package:finance_app/app_services/network_handler.dart';
 import 'package:finance_app/model/income_models.dart';
+import 'package:http/http.dart' as http;
 
 class IncomeRepository {
-  static Future<Object> fetchIncomeData(String apiName) async {
+  static Future<IncomeModel?> fetchIncomes(String token) async {
     try {
-      var url = Uri.parse(AppUrl.domain + apiName);
-      var response = await http.get(url);
+      final response = await http.get(
+        Uri.parse(AppUrl.incomes),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token $token',
+        },
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 200) {
         var decodedResponse = jsonDecode(response.body);
-        if (decodedResponse is List) {
-          List<IncomeModel> incomeList =
-              decodedResponse.map((item) => IncomeModel.fromJson(item)).toList();
-          return Success(code: 200, response: incomeList);
-        } else if (decodedResponse is Map<String, dynamic>) {
-          IncomeModel incomeModel = IncomeModel.fromJson(decodedResponse);
-          return Success(code: 200, response: [incomeModel]);
-        } else {
-          return Failure(
-              code: response.statusCode,
-              response: "Invalid Response Structure");
-        }
+        return IncomeModel.fromJson(decodedResponse);
       } else {
-        return Failure(
-            code: response.statusCode, response: "Invalid Response Coming");
+        print('Failed to fetch incomes with status: ${response.statusCode}');
+        return null;
       }
     } catch (e) {
-      return "Invalid Response";
+      print('Error during fetching incomes: $e');
+      return null;
     }
   }
 }

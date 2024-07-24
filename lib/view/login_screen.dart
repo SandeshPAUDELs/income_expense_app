@@ -1,50 +1,19 @@
-import 'package:finance_app/model/data.dart';
-import 'package:finance_app/theme.dart';
-import 'package:finance_app/view/login_screen.dart';
-import 'package:finance_app/view_models/expense_vm.dart';
-import 'package:finance_app/view_models/income_vm.dart';
-import 'package:finance_app/view_models/navigation_vm.dart';
 import 'package:finance_app/view_models/user_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AuthViewModel()),
-        ChangeNotifierProvider(create: (context) => NavigationViewModel()),
-        ChangeNotifierProvider(create: (context) => IncomeViewModel()),
-        ChangeNotifierProvider(create: (context) => ExpenseViewModel()),
-      ],
-      child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: lightColorScheme
-        ),
-        home: LoginScreen(),
-      ),
-    );
-  }
-}
-
-class RegisterScreen extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  RegisterScreen({super.key});
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     
-    // final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text('Register')),
+      appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -71,19 +40,32 @@ class RegisterScreen extends StatelessWidget {
               onPressed: () {
                 String username = _usernameController.text;
                 String password = _passwordController.text;
-                final AddUser user = AddUser(username: username, password: password); 
-                Provider.of<AuthViewModel>(context, listen: false).addUser(user);
-                // Provider.of<AuthViewModel>(context, listen: false).login(username, password, context);
+                
+                Provider.of<AuthViewModel>(context, listen: false).login(username, password, context);
                 
               },
               style: ElevatedButton.styleFrom(
                 shadowColor: Colors.blue,
                 minimumSize: Size(200, 50),
               ),
-              child: const Text('Register'),
+              child: const Text('Login'),
             ),
-
-           
+            Consumer<AuthViewModel>(
+              builder: (context, authViewModel, child) {
+                if (authViewModel.authenticatedUser != null) {
+                  return Text(
+                    'Logged in as: ${authViewModel.authenticatedUser!.username}');
+                } else if (authViewModel.errorMessage.isNotEmpty) {
+                  return Text(
+                    authViewModel.errorMessage,
+                    style: const TextStyle(color: Colors.red),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+            
           ],
         ),
       ),

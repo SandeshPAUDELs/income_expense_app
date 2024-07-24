@@ -1,8 +1,7 @@
 class AppUrl {
-  static String domain = 'http://192.168.1.69:8000/';
-  static String login = 'login/';
-  static String register = 'register/';
-  static String incomes = 'incomes/';
-  static String expenses = 'expenses/';
-  
+  static const String baseUrl = 'http://192.168.1.69:8000';
+  static const String login = '$baseUrl/login/';
+  static const String register = '$baseUrl/register/';
+  static const String incomes = '$baseUrl/incomes/';
+  static const String expenses = '$baseUrl/expenses/';
 }
