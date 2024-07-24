@@ -8,7 +8,7 @@ class UserRepository {
   static Future<AuthenticatedUser?> login(String username, String password) async {
     try {
       final response = await http.post(
-        Uri.parse(AppUrl.login),
+        Uri.parse(AppUrl.domain + AppUrl.login),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -39,7 +39,7 @@ class UserRepository {
 
   static Future<Object> addUser(AddUser user) async {
       try {
-        var url = Uri.parse(AppUrl.register);
+        var url = Uri.parse(AppUrl.domain + AppUrl.register);
         var response = await http.post(
           url,
           headers: {'Content-Type': 'application/json'},
@@ -54,6 +54,8 @@ class UserRepository {
           return Failure(
               code: response.statusCode, response: "Failed to add user");
         }
+  //       if (response.statusCode == 201) {
+
     } catch (e) {
       return Failure(response: "Invalid Response");
     }

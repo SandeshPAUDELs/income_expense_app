@@ -1,4 +1,6 @@
 import 'package:finance_app/model/data.dart';
+import 'package:finance_app/theme.dart';
+import 'package:finance_app/view_models/navigation_vm.dart';
 import 'package:finance_app/view_models/user_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +15,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthViewModel()),
+        ChangeNotifierProvider(create: (context) => NavigationViewModel()),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: lightColorScheme
+        ),
         home: LoginScreen(),
       ),
     );
@@ -29,8 +36,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context);
-  //  const  authViewModel = Provider.of<AuthViewModel>(context);
+    
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
@@ -39,11 +46,19 @@ class LoginScreen extends StatelessWidget {
           children: [
             TextField(
               controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'Username'),
-            ),
+              decoration: const InputDecoration(labelText: 'Username',
+              contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+      ))),
+            const SizedBox(height: 20),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password',
+              contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4))
+              )),
               obscureText: true,
             ),
             const SizedBox(height: 20),
@@ -51,13 +66,15 @@ class LoginScreen extends StatelessWidget {
               onPressed: () {
                 String username = _usernameController.text;
                 String password = _passwordController.text;
-                final AddUser user = AddUser(username: username, password: password);
-
-                // Provider.of<AuthViewModel>(context, listen: false)
-                //     .login(username, password, context);
-                Provider.of<AuthViewModel>(context, listen: false).addUser(user);
+                // final AddUser user = AddUser(username: username, password: password); 
+                // Provider.of<AuthViewModel>(context, listen: false).addUser(user);
+                Provider.of<AuthViewModel>(context, listen: false).login(username, password, context);
                 
               },
+              style: ElevatedButton.styleFrom(
+                shadowColor: Colors.blue,
+                minimumSize: Size(200, 50),
+              ),
               child: const Text('Login'),
             ),
             Consumer<AuthViewModel>(
@@ -75,6 +92,7 @@ class LoginScreen extends StatelessWidget {
                 }
               },
             ),
+            
           ],
         ),
       ),

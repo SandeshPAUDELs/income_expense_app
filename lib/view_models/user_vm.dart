@@ -1,7 +1,7 @@
 import 'package:finance_app/app_services/network_handler.dart';
 import 'package:finance_app/data/network_services/user_service.dart';
-import 'package:finance_app/main.dart';
 import 'package:finance_app/model/data.dart';
+import 'package:finance_app/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,7 +32,7 @@ class AuthViewModel extends ChangeNotifier {
       _errorMessage = '';
 
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Placeholder()),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     } else {
       _errorMessage = 'Invalid Credentials';
