@@ -2,6 +2,7 @@
 import 'package:finance_app/view/expense_screen.dart';
 import 'package:finance_app/view/income_expense.dart';
 import 'package:finance_app/view/income_screen.dart';
+import 'package:finance_app/view/post_transactions.dart';
 import 'package:finance_app/view_models/navigation_vm.dart';
 import 'package:flutter/material.dart'
     show BuildContext, Icon, Icons, NavigationBar, NavigationDestination, Placeholder, Scaffold, StatelessWidget, Widget;
@@ -24,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         case 2:
           return Expense();
         case 3:
-          return const Placeholder();
+          return const PostIncomesExpenses();
         
         default:
           return IncomeExpense();

@@ -22,15 +22,20 @@ class Expense extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Expenses'),
       ),
-      body: ListView.builder(
-        itemCount: expenseViewModel.expenseModel!.expenses.length,
-        itemBuilder: (context, index) {
-          var expense = expenseViewModel.expenseModel!.expenses[index];
-          return ListTile(
-            title: Text(expense.title),
-            subtitle: Text(expense.description),
-          );
+      body: RefreshIndicator(
+        onRefresh: () {
+          return expenseViewModel.fetchExpenses();
         },
+        child: ListView.builder(
+          itemCount: expenseViewModel.expenseModel!.expenses.length,
+          itemBuilder: (context, index) {
+            var expense = expenseViewModel.expenseModel!.expenses[index];
+            return ListTile(
+              title: Text(expense.title),
+              subtitle: Text(expense.description),
+            );
+          },
+        ),
       ),
     );
   }

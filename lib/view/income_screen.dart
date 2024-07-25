@@ -30,15 +30,20 @@ class Income extends StatelessWidget {
       appBar: AppBar(
         title: Text('Incomes'),
       ),
-      body: ListView.builder(
-        itemCount: incomeViewModel.incomeModel!.incomes.length,
-        itemBuilder: (context, index) {
-          var income = incomeViewModel.incomeModel!.incomes[index];
-          return ListTile(
-            title: Text(income.title),
-            subtitle: Text(income.description),
-          );
-        },
+      body: RefreshIndicator(
+        onRefresh: () { 
+          return incomeViewModel.fetchIncomes();
+         },
+        child: ListView.builder(
+          itemCount: incomeViewModel.incomeModel!.incomes.length,
+          itemBuilder: (context, index) {
+            var income = incomeViewModel.incomeModel!.incomes[index];
+            return ListTile(
+              title: Text(income.title),
+              subtitle: Text(income.description),
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:finance_app/app_services/network_handler.dart';
 import 'package:finance_app/model/income_models.dart';
 import 'package:flutter/material.dart';
 import 'package:finance_app/data/network_services/income_service.dart';
@@ -28,4 +29,33 @@ class IncomeViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+// code to add new incomes
+
+  String _newIncomeDetails = '';
+  String get newIncomeDetails => _newIncomeDetails;
+  void setNewIncomeDetails(String value) {
+    _newIncomeDetails = value;
+    notifyListeners();
+  }
+
+
+Future<void> addIncome(AddIncome income, String token) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null){
+      var response = await IncomeService.addIncome(income, token);
+      if(response is Success){
+        setNewIncomeDetails(income.toJson().toString());
+        print(response.response);
+        notifyListeners();
+      }
+      else if (response is Failure){
+        print(response.code);
+
+      }
+    }
+
+}
+
 }
