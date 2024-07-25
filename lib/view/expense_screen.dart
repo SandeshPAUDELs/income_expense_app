@@ -7,32 +7,31 @@ class Expense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final expenseViewModel =
+        Provider.of<ExpenseViewModel>(context, listen: false);
+    if (expenseViewModel.errorMessage.isNotEmpty) {
+      return Center(child: Text(expenseViewModel.errorMessage));
+    }
+
+    if (expenseViewModel.expenseModel == null) {
+      expenseViewModel.fetchExpenses();
+      return Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Expenses'),
-        ),
-        body: Consumer<ExpenseViewModel>(
-          builder: (context, expenseViewModel, child) {
-            // if (expenseViewModel.errorMessage.isNotEmpty) {
-            //   return Center(child: Text(expenseViewModel.errorMessage));
-            // }
-
-            if (expenseViewModel.expenseModel == null) {
-              expenseViewModel.fetchExpenses();
-              return Center(child: CircularProgressIndicator());
-            }
-
-            return ListView.builder(
-              itemCount: expenseViewModel.expenseModel!.expenses.length,
-              itemBuilder: (context, index) {
-                var expense = expenseViewModel.expenseModel!.expenses[index];
-                return ListTile(
-                  title: Text(expense.title),
-                  subtitle: Text(expense.description),
-                );
-              },
-            );
-          },
-        ));
+      appBar: AppBar(
+        title: const Text('Expenses'),
+      ),
+      body: ListView.builder(
+        itemCount: expenseViewModel.expenseModel!.expenses.length,
+        itemBuilder: (context, index) {
+          var expense = expenseViewModel.expenseModel!.expenses[index];
+          return ListTile(
+            title: Text(expense.title),
+            subtitle: Text(expense.description),
+          );
+        },
+      ),
+    );
   }
 }
