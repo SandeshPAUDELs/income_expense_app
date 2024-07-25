@@ -13,9 +13,9 @@ class Expense extends StatelessWidget {
         ),
         body: Consumer<ExpenseViewModel>(
           builder: (context, expenseViewModel, child) {
-            if (expenseViewModel.errorMessage.isNotEmpty) {
-              return Center(child: Text(expenseViewModel.errorMessage));
-            }
+            // if (expenseViewModel.errorMessage.isNotEmpty) {
+            //   return Center(child: Text(expenseViewModel.errorMessage));
+            // }
 
             if (expenseViewModel.expenseModel == null) {
               expenseViewModel.fetchExpenses();

@@ -13,6 +13,7 @@ class IncomeViewModel extends ChangeNotifier {
   Future<void> fetchIncomes() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
+    
 
     if (token != null) {
       var response = await _incomeService.fetchIncomes(token);
@@ -20,7 +21,7 @@ class IncomeViewModel extends ChangeNotifier {
         _incomeModel = response;
         _errorMessage = '';
       } else {
-        _errorMessage = 'Failed to fetch incomes';
+        _errorMessage = 'Failed to fetch incomes/ check connectin';
       }
     } else {
       _errorMessage = 'Token not found';

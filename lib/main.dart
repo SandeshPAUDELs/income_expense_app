@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ExpenseViewModel()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: lightColorScheme

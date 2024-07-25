@@ -13,6 +13,13 @@ class ExpenseViewModel extends ChangeNotifier {
   Future<void> fetchExpenses() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
+    // if(token != null) {
+    //   var response = await _ExpenseService.fetchExpenses(token);
+    //   if(response != null) {
+    //     _expenseModel = response;
+    //     // _errorMessage = '';
+    //   } 
+    // } 
 
     if (token != null) {
       var response = await _ExpenseService.fetchExpenses(token);
@@ -20,7 +27,7 @@ class ExpenseViewModel extends ChangeNotifier {
         _expenseModel = response;
         _errorMessage = '';
       } else {
-        _errorMessage = 'Failed to fetch expenses';
+        _errorMessage = 'Failed to fetch expenses, check connection';
       }
     } else {
       _errorMessage = 'Token not found';
