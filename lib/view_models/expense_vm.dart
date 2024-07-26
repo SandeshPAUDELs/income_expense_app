@@ -1,3 +1,4 @@
+import 'package:finance_app/app_services/network_handler.dart';
 import 'package:finance_app/data/network_services/expense_service.dart';
 import 'package:finance_app/model/expense_models.dart';
 import 'package:flutter/material.dart';
@@ -34,4 +35,30 @@ class ExpenseViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  // cde to add new expense
+  String _newExpenseDetails = '';
+  String get newExpenseDetails => _newExpenseDetails;
+  void setNewExpenseDetails(String value) {
+    _newExpenseDetails = value;
+    notifyListeners();
+  }
+
+  Future<void> addExpense(AddExpense expense, String token) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null){
+      var response = await ExpenseService.addExpense(expense, token);
+      if(response is Success){
+        setNewExpenseDetails(expense.toJson().toString());
+        print(response.response);
+        notifyListeners();
+      }
+      else if (response is Failure){
+        print(response.code);
+
+      }
+    }
+
+}
 }

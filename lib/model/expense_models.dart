@@ -57,3 +57,35 @@ class Expense {
         "user": user,
       };
 }
+
+
+class AddExpense{
+  String title;
+  String amount;
+  DateTime date;
+  String description;
+  String category;
+
+  AddExpense({
+    required this.title,
+    required this.amount,
+    required this.date,
+    required this.description,
+    required this.category,
+  });
+  factory AddExpense.fromJson(Map<String, dynamic> json) => AddExpense(
+        title: json["title"],
+        amount: json["amount"],
+        date: DateTime.parse(json["date"]),
+        description: json["description"],
+        category: json["category"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "amount": amount,
+        "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+        "description": description,
+        "category": category,
+      };
+}
