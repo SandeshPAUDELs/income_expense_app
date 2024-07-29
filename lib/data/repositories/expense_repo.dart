@@ -60,4 +60,29 @@ class ExpenseRepository {
     }
   }
 
+  // code to delete expense
+  static Future<Object> deleteExpense(String token, int id) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('${AppUrl.expenses}$id/'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token $token',
+        },
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 204) {
+        return Success(code: 204, response: "Expense Deleted Successfully");
+      } else {
+        print('Failed to delete expense with status: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Error during deleting expense: $e');
+      return false;
+    }
+  }
 }

@@ -31,4 +31,21 @@ class IncomeService {
     }
     
   }
+  // code to delete income
+  static Future<Object> deleteIncome(String token, int id) async {
+    try {
+      final response = await IncomeRepository.deleteIncome(token, id);
+      if (response is Success) {
+        return response;
+      }
+      else {
+        print('failed to delete income');
+        return Failure(response: "Failed to delete income");
+      }
+
+    }
+    catch(e) {
+      return Failure(code: 500, response: "Invalid Response");
+    }
+  }
 }

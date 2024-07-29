@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:finance_app/view_models/expense_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,10 +32,65 @@ class Expense extends StatelessWidget {
           itemCount: expenseViewModel.expenseModel!.expenses.length,
           itemBuilder: (context, index) {
             var expense = expenseViewModel.expenseModel!.expenses[index];
-            return ListTile(
-              title: Text(expense.title),
-              subtitle: Text(expense.description),
+
+            return Card(
+              // elevation: 2.0,
+              margin: const EdgeInsets.only(bottom: 8.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 10.0),
+                leading: CircleAvatar(
+                  radius: 40,
+                  child: Text(
+                    expense.category.substring(0, 3),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                  ),
+                ),
+                title: Text(
+                  expense.title,
+                  maxLines: 2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Theme.of(context).colorScheme.secondary),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 4.0),
+                    Text(
+                      'Rs ${expense.amount} /-',
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                    // Spacer(),
+                    Text(expense.date.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.tertiary)),
+                  ],
+                ),
+                trailing: IconButton(
+                  onPressed: () => expenseViewModel
+                      .deleteExpense(expense.id)
+                      .then((value) => expenseViewModel.fetchExpenses()),
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
             );
+            ;
           },
         ),
       ),

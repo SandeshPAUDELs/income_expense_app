@@ -26,8 +26,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: lightColorScheme
+          colorScheme: lightColorScheme,
         ),
+        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
         home: LoginScreen(),
       ),
     );
@@ -42,7 +43,6 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     // final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(title: const Text('Register')),
@@ -51,20 +51,23 @@ class RegisterScreen extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'Username',
-              contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-      ))),
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                    labelText: 'Username',
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ))),
             const SizedBox(height: 20),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password',
-              contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(4))
-              )),
+              decoration: const InputDecoration(
+                  labelText: 'Password',
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4)))),
               obscureText: true,
             ),
             const SizedBox(height: 20),
@@ -72,10 +75,11 @@ class RegisterScreen extends StatelessWidget {
               onPressed: () {
                 String username = _usernameController.text;
                 String password = _passwordController.text;
-                final AddUser user = AddUser(username: username, password: password); 
-                Provider.of<AuthViewModel>(context, listen: false).addUser(user);
+                final AddUser user =
+                    AddUser(username: username, password: password);
+                Provider.of<AuthViewModel>(context, listen: false)
+                    .addUser(user);
                 // Provider.of<AuthViewModel>(context, listen: false).login(username, password, context);
-                
               },
               style: ElevatedButton.styleFrom(
                 shadowColor: Colors.blue,
@@ -83,13 +87,9 @@ class RegisterScreen extends StatelessWidget {
               ),
               child: const Text('Register'),
             ),
-
-           
           ],
         ),
       ),
     );
   }
 }
-
-

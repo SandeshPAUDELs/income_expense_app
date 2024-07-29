@@ -61,4 +61,19 @@ class ExpenseViewModel extends ChangeNotifier {
     }
 
 }
+
+// code to deltere expense
+  Future<void> deleteExpense(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null) {
+      var response = await ExpenseService.deleteExpense(token, id);
+      if (response is Success) {
+        print(response.response);
+        notifyListeners();
+      } else if (response is Failure) {
+        print(response.code);
+      }
+    }
+  }
 }

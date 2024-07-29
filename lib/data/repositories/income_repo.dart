@@ -30,25 +30,55 @@ class IncomeRepository {
       return null;
     }
   }
+
   //  code to add income
   static Future<Object> addIncome(AddIncome income, String token) async {
-    try{
+    try {
       var url = Uri.parse(AppUrl.incomes);
-      var response = await http.post(url,
-      headers: {'Content-Type': 'application/json',
-      'Authorization': 'Token $token'},
-      body: jsonEncode(income.toJson()),
+      var response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token $token'
+        },
+        body: jsonEncode(income.toJson()),
       );
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
-      if(response.statusCode == 201){
+      if (response.statusCode == 201) {
         return Success(code: 201, response: "Income Added Successfully");
+      } else {
+        return Failure(
+            code: response.statusCode, response: "Failed to Add Income");
       }
-      else{
-        return Failure(code: response.statusCode, response: "Failed to Add Income");
-      }
+    } catch (e) {
+      return Failure(response: "Invalid Response");
     }
-    catch (e){
+  }
+
+  // code to delete income
+  static Future<Object> deleteIncome(String token, int id) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('${AppUrl.incomes}$id/'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token $token',
+        },
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 204) {
+        return Success(code: 204, response: "Income Deleted Successfully");
+      } else {
+        print('Failed to delete income with status: ${response.statusCode}');
+        return Failure(
+            code: response.statusCode, response: "Failed to delete income");
+      }
+    } catch (e) {
+      print('Error during deleting income: $e');
       return Failure(response: "Invalid Response");
     }
   }

@@ -31,16 +31,70 @@ class Income extends StatelessWidget {
         title: Text('Incomes'),
       ),
       body: RefreshIndicator(
-        onRefresh: () { 
+        onRefresh: () {
           return incomeViewModel.fetchIncomes();
-         },
+        },
         child: ListView.builder(
           itemCount: incomeViewModel.incomeModel!.incomes.length,
           itemBuilder: (context, index) {
             var income = incomeViewModel.incomeModel!.incomes[index];
-            return ListTile(
-              title: Text(income.title),
-              subtitle: Text(income.description),
+
+            return Card(
+              // elevation: 2.0,
+              margin: const EdgeInsets.only(bottom: 8.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 10.0),
+                leading: CircleAvatar(
+                  radius: 40,
+                  child: Text(
+                    income.source.substring(0, 3),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                  ),
+                ),
+                title: Text(
+                  income.title,
+                  maxLines: 2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Theme.of(context).colorScheme.secondary),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 4.0),
+                    Text(
+                      'Rs ${income.amount} /-',
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                    // Spacer(),
+                    Text(income.date.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.tertiary)),
+                  ],
+                ),
+                trailing: IconButton.outlined(
+                  onPressed: () => incomeViewModel
+                      .deleteIncome(income.id)
+                      .then((value) => incomeViewModel.fetchIncomes()),
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
             );
           },
         ),

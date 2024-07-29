@@ -31,6 +31,24 @@ class ExpenseService {
     }
     
   }
+
+  // code to delete expense
+  static Future<Object> deleteExpense(String token, int id) async {
+    try {
+      final response = await ExpenseRepository.deleteExpense(token, id);
+      if (response is Success) {
+        return response;
+      }
+      else {
+        print('failed to delete expense');
+        return Failure(response: "Failed to delete expense");
+      }
+
+    }
+    catch(e) {
+      return Failure(code: 500, response: "Invalid Response");
+    }
+  }
 }
 
 

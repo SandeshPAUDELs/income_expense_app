@@ -9,18 +9,42 @@ class IncomeExpense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Income Expense'),
-      ),
-      body: Column(
+    final expenseViewModel =
+        Provider.of<ExpenseViewModel>(context, listen: false);
+    final incomeViewModel = Provider.of<IncomeViewModel>(context, listen: false);
+    if (expenseViewModel.errorMessage.isNotEmpty && incomeViewModel.errorMessage.isNotEmpty) {
+      return Center(child: Column(
         children: [
-          Text(Provider.of<AuthViewModel>(context, listen:false).authenticatedUser!.username),
-          // Text(Provider.of<IncomeViewModel>(context, listen:false).incomeModel!.totalIncome.toString()),
-          // Text(Provider.of<ExpenseViewModel>(context, listen: false).expenseModel!.totalExpense.toString())
+          Text(expenseViewModel.errorMessage),
+          Text(incomeViewModel.errorMessage)
         ],
-      )
-    );
+      ),
+      );
+    }
+
+    if (expenseViewModel.expenseModel == null && incomeViewModel.incomeModel == null) {
+      expenseViewModel.fetchExpenses();
+      incomeViewModel.fetchIncomes();
+      return const Center(child: CircularProgressIndicator());
+    }
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Income Expense'),
+        ),
+        body: Column(
+          children: [
+            Text(Provider.of<AuthViewModel>(context, listen: false)
+                .authenticatedUser!
+                .username),
+            Text(Provider.of<IncomeViewModel>(context, listen: false)
+                .incomeModel!
+                .totalIncome
+                .toString()),
+            Text(Provider.of<ExpenseViewModel>(context, listen: false)
+                .expenseModel!
+                .totalExpense
+                .toString())
+          ],
+        ));
   }
 }

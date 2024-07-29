@@ -57,5 +57,19 @@ Future<void> addIncome(AddIncome income, String token) async {
     }
 
 }
+// code to delete income
+  Future<void> deleteIncome(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null) {
+      var response = await IncomeService.deleteIncome(token, id);
+      if (response is Success) {
+        print(response.response);
+        notifyListeners();
+      } else if (response is Failure) {
+        print(response.code);
+      }
+    }
+  }
 
 }
