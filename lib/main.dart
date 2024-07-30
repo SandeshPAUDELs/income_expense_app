@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:finance_app/model/data.dart';
 import 'package:finance_app/theme.dart';
 import 'package:finance_app/view/login_screen.dart';
@@ -9,7 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  // runApp(DevicePreview(child: MyApp()));
+  runApp(DevicePreview(
+    builder: (context) => MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

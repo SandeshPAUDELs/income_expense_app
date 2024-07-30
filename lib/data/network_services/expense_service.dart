@@ -31,6 +31,7 @@ class ExpenseService {
     }
     
   }
+  
 
   // code to delete expense
   static Future<Object> deleteExpense(String token, int id) async {
@@ -49,6 +50,26 @@ class ExpenseService {
       return Failure(code: 500, response: "Invalid Response");
     }
   }
+
+  // code to update expense
+  static Future<Object> updateExpense(String token, int id) async {
+    try {
+      final response = await ExpenseRepository.updateExpense(token, id);
+      if (response is Success) {
+        return response;
+      }
+      else {
+        print('failed to update expense');
+        return Failure(response: "Failed to update expense");
+      }
+
+    }
+    catch(e) {
+      return Failure(code: 500, response: "Invalid Response");
+    }
+  }
+  
+
 }
 
 

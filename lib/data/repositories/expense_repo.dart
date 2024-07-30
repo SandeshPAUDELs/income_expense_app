@@ -60,6 +60,33 @@ class ExpenseRepository {
     }
   }
 
+  // code to update expense
+  static Future<Object> updateExpense(String token, int id) async {
+    try {
+      final response = await http.put(
+        Uri.parse('${AppUrl.expenses}$id/'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token $token',
+        },
+        // body: jsonEncode(expense.toJson()),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        return Success(code: 200, response: "Expense Updated Successfully");
+      } else {
+        print('Failed to update expense with status: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Error during updating expense: $e');
+      return false;
+    }
+  }
+
   // code to delete expense
   static Future<Object> deleteExpense(String token, int id) async {
     try {

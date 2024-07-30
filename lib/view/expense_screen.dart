@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:finance_app/view_models/expense_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +15,7 @@ class Expense extends StatelessWidget {
 
     if (expenseViewModel.expenseModel == null) {
       expenseViewModel.fetchExpenses();
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     return Scaffold(
@@ -79,18 +77,25 @@ class Expense extends StatelessWidget {
                                 color: Theme.of(context).colorScheme.tertiary)),
                   ],
                 ),
-                trailing: IconButton(
-                  onPressed: () => expenseViewModel
-                      .deleteExpense(expense.id)
-                      .then((value) => expenseViewModel.fetchExpenses()),
-                  icon: Icon(
-                    Icons.delete,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                
+                trailing: Wrap(
+                  spacing: 12, // space between two icons
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () => expenseViewModel
+                          .deleteExpense(expense.id)
+                          .then((value) => expenseViewModel.fetchExpenses()),
+                      icon: Icon(
+                        Icons.delete,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    const Icon(Icons.edit),
+                  ],
                 ),
               ),
             );
-            ;
+            
           },
         ),
       ),

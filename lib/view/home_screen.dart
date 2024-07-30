@@ -5,7 +5,7 @@ import 'package:finance_app/view/income_screen.dart';
 import 'package:finance_app/view/post_transactions.dart';
 import 'package:finance_app/view_models/navigation_vm.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, Icon, Icons, NavigationBar, NavigationDestination, Placeholder, Scaffold, StatelessWidget, Widget;
+    show BuildContext, Icon, Icons, NavigationBar, NavigationDestination, Scaffold, StatelessWidget, Widget;
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -19,16 +19,16 @@ class HomeScreen extends StatelessWidget {
     Widget getCurrentScreen(int index) {
       switch (index) {
         case 0:
-          return IncomeExpense();
+          return const IncomeExpense();
         case 1:
           return Income();
         case 2:
-          return Expense();
+          return const Expense();
         case 3:
           return const PostIncomesExpenses();
         
         default:
-          return IncomeExpense();
+          return const IncomeExpense();
       }
     }
 

@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+    // final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
