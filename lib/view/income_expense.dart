@@ -46,30 +46,31 @@ class IncomeExpense extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            32.0,
-                          ),
-                          // color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                        child: const CircleAvatar(
-                          maxRadius: 28.0,
-                          backgroundColor: Colors.transparent,
-                          child: Icon(Icons.verified_user_rounded),
-                        ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        32.0,
                       ),
-                      Text(
-                        "Hello, ${Provider.of<AuthViewModel>(context, listen: false).authenticatedUser!.username}",
-                        style: const TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
-                          // color: Static.PrimaryMaterialColor[800],
-                        ),
+                      // color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    child: const CircleAvatar(
+                      maxRadius: 28.0,
+                      backgroundColor: Colors.transparent,
+                      child: Icon(Icons.verified_user_rounded),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Text(
+                      "Hello, ${Provider.of<AuthViewModel>(context, listen: false).authenticatedUser!.username}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.w700,
+                        // color: Static.PrimaryMaterialColor[800],
                       ),
-                    ],
+                    ),
                   ),
                   Icon(
                     Icons.logout,
@@ -202,7 +203,6 @@ class IncomeExpense extends StatelessWidget {
                               ),
                             ],
                           ),
-                          
                         ],
                       ),
                     ),

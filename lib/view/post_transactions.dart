@@ -100,7 +100,7 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                                 children: [
                                                   TextField(
                                                     controller: _dateController,
-                                                    decoration: InputDecoration(
+                                                    decoration: const InputDecoration(
                                                         labelText: 'Date'),
                                                     onChanged: (value) {
                                                       setState(() {});
@@ -126,36 +126,36 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                                   ),
                                                   TextField(
                                                     controller: _nameController,
-                                                    decoration: InputDecoration(
+                                                    decoration: const InputDecoration(
                                                         labelText: 'Title'),
                                                   ),
                                                   TextField(
                                                     controller:
                                                         _amountController,
-                                                    decoration: InputDecoration(
+                                                    decoration: const InputDecoration(
                                                         labelText: 'Amount'),
                                                   ),
                                                   TextField(
                                                     controller:
                                                         _descriptionController,
-                                                    decoration: InputDecoration(
+                                                    decoration: const InputDecoration(
                                                         labelText:
                                                             'Description'),
                                                   ),
                                                   TextField(
                                                     controller:
                                                         _sourceController,
-                                                    decoration: InputDecoration(
+                                                    decoration: const InputDecoration(
                                                         labelText: 'Source'),
                                                   ),
                                                   TextField(
                                                     controller:
                                                         _otherSourceController,
-                                                    decoration: InputDecoration(
+                                                    decoration: const InputDecoration(
                                                         labelText:
                                                             'Other Source'),
                                                   ),
-                                                  SizedBox(height: 20),
+                                                  const SizedBox(height: 20),
                                                   ElevatedButton(
                                                     onPressed: () {
                                                       final title =
@@ -196,7 +196,7 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                                     // Provider.of<ExpenseViewModel>(context, listen: false).addExpense(addExpenses, 'token');
                                                     // },
 
-                                                    child: Text('Post Income'),
+                                                    child: const Text('Post Income'),
                                                   ),
                                                 ],
                                               ),
@@ -220,7 +220,7 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                         children: [
                                           TextField(
                                             controller: _expenseDateController,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                                 labelText: 'Date'),
                                             onChanged: (value) {
                                               setState(() {});
@@ -242,28 +242,28 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                           ),
                                           TextField(
                                             controller: _expenseNameController,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                                 labelText: 'Title'),
                                           ),
                                           TextField(
                                             controller:
                                                 _expenseAmountController,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                                 labelText: 'Amount'),
                                           ),
                                           TextField(
                                             controller:
                                                 _expenseDescriptionController,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                                 labelText: 'Description'),
                                           ),
                                           TextField(
                                             controller:
                                                 _expenseCategoryController,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                                 labelText: 'Category'),
                                           ),
-                                          SizedBox(height: 20),
+                                          const SizedBox(height: 20),
                                           ElevatedButton(
                                             onPressed: () {
                                               final expenseTitle =
@@ -296,7 +296,7 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                             // Provider.of<ExpenseViewModel>(context, listen: false).addExpense(addExpenses, 'token');
                                             // },
 
-                                            child: Text('Post Expense'),
+                                            child: const Text('Post Expense'),
                                             // Text('hello 2'),
                                           ),
                                         ],
