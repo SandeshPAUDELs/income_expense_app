@@ -2,9 +2,7 @@ import 'package:finance_app/model/expense_models.dart';
 import 'package:finance_app/model/income_models.dart';
 import 'package:finance_app/view_models/expense_vm.dart';
 import 'package:finance_app/view_models/income_vm.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class PostIncomesExpenses extends StatefulWidget {
@@ -30,6 +28,8 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
   final TextEditingController _expenseDateController = TextEditingController();
   final TextEditingController _expenseCategoryController =
       TextEditingController();
+  String? _chosenIncomeValue;
+  String? _chosenExpenseValue;
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +100,9 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                                 children: [
                                                   TextField(
                                                     controller: _dateController,
-                                                    decoration: const InputDecoration(
-                                                        labelText: 'Date'),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            labelText: 'Date'),
                                                     onChanged: (value) {
                                                       setState(() {});
                                                     },
@@ -126,34 +127,66 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                                   ),
                                                   TextField(
                                                     controller: _nameController,
-                                                    decoration: const InputDecoration(
-                                                        labelText: 'Title'),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            labelText: 'Title'),
                                                   ),
                                                   TextField(
                                                     controller:
                                                         _amountController,
-                                                    decoration: const InputDecoration(
-                                                        labelText: 'Amount'),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            labelText:
+                                                                'Amount'),
                                                   ),
-                                                  TextField(
-                                                    controller:
-                                                        _descriptionController,
-                                                    decoration: const InputDecoration(
-                                                        labelText:
-                                                            'Description'),
-                                                  ),
-                                                  TextField(
-                                                    controller:
-                                                        _sourceController,
-                                                    decoration: const InputDecoration(
-                                                        labelText: 'Source'),
+                                                  // TextField(
+                                                  //   controller:
+                                                  //       _sourceController,
+                                                  //   decoration:
+                                                  //       const InputDecoration(
+                                                  //           labelText:
+                                                  //               'Source'),
+                                                  // ),
+                                                  DropdownButton<String>(
+                                                    value: _chosenIncomeValue,
+                                                    isExpanded: true,
+                                                    items: [
+                                                      'OTHER',
+                                                      'SIDE-HUSTLE',
+                                                      'BUSINESS',
+                                                      'SALARY',
+                                                    ]
+                                                        .map((unit) =>
+                                                            DropdownMenuItem<
+                                                                String>(
+                                                              value: unit,
+                                                              child: Text(
+                                                                unit,
+                                                              ),
+                                                            ))
+                                                        .toList(),
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 10),
+                                                    hint: const Text(
+                                                      "choose a Source",
+                                                    ),
+                                                    onChanged: (String? value) {
+                                                      setState(() {
+                                                        _chosenIncomeValue = value;
+                                                        _sourceController.text =
+                                                            _chosenIncomeValue!;
+                                                        // widget._sourceController.text = _chosenValue!;
+                                                      });
+                                                    },
                                                   ),
                                                   TextField(
                                                     controller:
                                                         _otherSourceController,
-                                                    decoration: const InputDecoration(
-                                                        labelText:
-                                                            'Other Source'),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            labelText:
+                                                                'Other Source'),
                                                   ),
                                                   const SizedBox(height: 20),
                                                   ElevatedButton(
@@ -191,12 +224,13 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                                               context,
                                                               listen: false)
                                                           .addIncome(addIncome,
-                                                              'token');
+                                                              'token', context);
                                                     },
                                                     // Provider.of<ExpenseViewModel>(context, listen: false).addExpense(addExpenses, 'token');
                                                     // },
 
-                                                    child: const Text('Post Income'),
+                                                    child: const Text(
+                                                        'Post Income'),
                                                   ),
                                                 ],
                                               ),
@@ -257,12 +291,48 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                             decoration: const InputDecoration(
                                                 labelText: 'Description'),
                                           ),
-                                          TextField(
-                                            controller:
-                                                _expenseCategoryController,
-                                            decoration: const InputDecoration(
-                                                labelText: 'Category'),
-                                          ),
+                                          // TextField(
+                                          //   controller:
+                                          //       _expenseCategoryController,
+                                          //   decoration: const InputDecoration(
+                                          //       labelText: 'Category'),
+                                          // ),
+                                          DropdownButton<String>(
+                                                    value: _chosenExpenseValue,
+                                                    isExpanded: true,
+                                                    items: [
+                                                      'GROCERIES',
+                                                      'TRANSPORT',
+                                                      'EATING-OUT',
+                                                      'ENTERTAINMENT',
+                                                      'UTILITIES',
+                                                      'RENT',
+                                                      'MISCALLANEOUS'
+                                                    ]
+                                                        .map((unit) =>
+                                                            DropdownMenuItem<
+                                                                String>(
+                                                              value: unit,
+                                                              child: Text(
+                                                                unit,
+                                                              ),
+                                                            ))
+                                                        .toList(),
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 10),
+                                                    hint: const Text(
+                                                      "choose a Category",
+                                                    ),
+                                                    onChanged: (String? value) {
+                                                      setState(() {
+                                                        _chosenExpenseValue = value;
+                                                        _expenseCategoryController.text =
+                                                            _chosenExpenseValue!;
+                                                        // widget._sourceController.text = _chosenValue!;
+                                                      });
+                                                    },
+                                                  ),
                                           const SizedBox(height: 20),
                                           ElevatedButton(
                                             onPressed: () {
@@ -290,8 +360,9 @@ class _PostIncomesExpensesState extends State<PostIncomesExpenses> {
                                               Provider.of<ExpenseViewModel>(
                                                       context,
                                                       listen: false)
-                                                  .addExpense(
-                                                      addExpenses, 'token');
+                                                  .addExpense(addExpenses,
+                                                      'token', context);
+                                              // SnackBarTheme.showSnackBar(context);
                                             },
                                             // Provider.of<ExpenseViewModel>(context, listen: false).addExpense(addExpenses, 'token');
                                             // },

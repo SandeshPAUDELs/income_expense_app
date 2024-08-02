@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:finance_app/view_models/income_vm.dart';
 
 class Income extends StatelessWidget {
   @override
+  
   Widget build(BuildContext context) {
+  
+  
     final incomeViewModel = Provider.of<IncomeViewModel>(context);
 
     if (incomeViewModel.errorMessage.isNotEmpty) {
@@ -110,14 +114,19 @@ class Income extends StatelessWidget {
                         ],
                       ),
                       trailing: IconButton.outlined(
-                        onPressed: () => incomeViewModel
-                            .deleteIncome(income.id)
+                        onPressed: () => 
+                        
+                        
+                        incomeViewModel
+                            .deleteIncome(income.id, context)
                             .then((value) => incomeViewModel.fetchIncomes()),
+
                         icon: Icon(
                           Icons.delete,
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
+                      
                     ),
                   );
                 },

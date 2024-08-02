@@ -114,6 +114,8 @@ class LoginScreen extends StatelessWidget {
 
                   Provider.of<AuthViewModel>(context, listen: false)
                       .login(username, password, context);
+                      
+                      
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -159,22 +161,7 @@ class LoginScreen extends StatelessWidget {
                 )
               ],
             ),
-            Consumer<AuthViewModel>(
-              builder: (context, authViewModel, child) {
-                if (authViewModel.authenticatedUser != null) {
-                  return Text(
-                      'Logged in as: ${authViewModel.authenticatedUser!.username}');
-                } else if (authViewModel.errorMessage.isNotEmpty) {
-                  return Text(
-                    authViewModel.errorMessage,
-                    style: const TextStyle(color: Colors.red),
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            ),
-            // TextButton(onPressed: Navigator.of(context).pushReplacement(RegisterScreen), child: Text('Register')),
+            
           ],
         ),
       ),

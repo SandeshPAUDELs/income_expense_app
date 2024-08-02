@@ -105,7 +105,7 @@ class Expense extends StatelessWidget {
                         children: <Widget>[
                           IconButton(
                             onPressed: () => expenseViewModel
-                                .deleteExpense(expense.id)
+                                .deleteExpense(expense.id, context)
                                 .then((value) =>
                                     expenseViewModel.fetchExpenses()),
                             icon: Icon(

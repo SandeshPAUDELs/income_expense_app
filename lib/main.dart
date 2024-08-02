@@ -169,7 +169,7 @@ class RegisterScreen extends StatelessWidget {
                   final AddUser user =
                       AddUser(username: username, password: password);
                   Provider.of<AuthViewModel>(context, listen: false)
-                      .addUser(user);
+                      .addUser(user, context);
                   // Provider.of<AuthViewModel>(context, listen: false).login(username, password, context);
                 },
                 style: ElevatedButton.styleFrom(
